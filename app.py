@@ -14,7 +14,6 @@ from bokeh.resources import CDN
 from bokeh.sampledata.iris import flowers
 
 load_dotenv()
-#api_key = os.environ['MY_API_KEY']
 
 app = Flask(__name__)
 
@@ -29,9 +28,10 @@ def make_plot(x, y):
     return p
 
 def make_plot2():
-    api_key = os.environ['MY_API_KEY']
+    #api_key = os.environ['MY_API_KEY']
 
-    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey={}'.format(api_key)
+    #url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey={}'.format(api_key)
+    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&outputsize=full&apikey=0BQ5L9P8FFKF6MU1'
     r = requests.get(url)
     data = r.json()
     df = pd.DataFrame(data)
