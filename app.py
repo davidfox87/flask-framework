@@ -3,10 +3,18 @@ from flask import Flask, render_template, request, redirect
 import numpy as np
 import pandas as pd
 import json
+
+import requests
+from dotenv import load_dotenv
+import os
+
 from bokeh.embed import json_item
 from bokeh.plotting import figure
 from bokeh.resources import CDN
 from bokeh.sampledata.iris import flowers
+
+load_dotenv()
+#api_key = os.environ['MY_API_KEY']
 
 app = Flask(__name__)
 
@@ -20,9 +28,29 @@ def make_plot(x, y):
     p.circle(flowers[x], flowers[y], color=colors, fill_alpha=0.2, size=10)
     return p
 
+def make_plot2():
+    api_key = os.environ['MY_API_KEY']
+
+    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey={}'.format(api_key)
+    r = requests.get(url)
+    data = r.json()
+    df = pd.DataFrame(data)
+
+    df = df.iloc[6:]
+    df2 = df['Time Series (Daily)'].apply(pd.Series)
+    df2 = df2.astype('float64')
+    df2.index = pd.to_datetime(df2.index)
+
+    print(df2.info())
+    p = figure(title = "stock price", x_axis_type='datetime', sizing_mode="fixed", width=400, height=400)
+    p.line(df2.index, df2['4. close'], line_width=4)
+    print(df2.index.values, df2['4. close'].values)
+    return p
+
+
 @app.route('/')
 def index():
-  return render_template('index.html')
+    return render_template('index.html')
 
 @app.route('/about')
 def about():
@@ -30,7 +58,8 @@ def about():
 
 @app.route('/plot')
 def plot():
-    p = make_plot('sepal_width', 'sepal_length')
+    # p = make_plot('sepal_width', 'sepal_length')
+    p = make_plot2()
     return json.dumps(json_item(p))
 
 
