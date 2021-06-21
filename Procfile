@@ -1,1 +1,1 @@
-web: bokeh serve --port=5006 --allow-websocket-origin=https://limitless-forest-65059.herokuapp.com/ --address=0.0.0.0 --use-xheaders app.py
+web: bokeh serve --port=$PORT --allow-websocket-origin=https://limitless-forest-65059.herokuapp.com/ --address=0.0.0.0 --use-xheaders
