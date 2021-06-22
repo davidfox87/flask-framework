@@ -12,11 +12,9 @@ import pandas as pd
 import json
 
 import requests
-from dotenv import load_dotenv
 import os
 
 from boto.s3.connection import S3Connection
-
 
 app = Flask(__name__)
 
