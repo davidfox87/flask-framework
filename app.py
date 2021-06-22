@@ -15,13 +15,15 @@ import requests
 from dotenv import load_dotenv
 import os
 
+from boto.s3.connection import S3Connection
+
 
 app = Flask(__name__)
 
 
 def get_data(name="IBM"):
-
-    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&outputsize=full&apikey=0BQ5L9P8FFKF6MU1'.format(name)
+    alphav_key = S3Connection(os.environ['API_KEY'])
+    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&outputsize=full&apikey={}'.format(name, alphav_key)
     r = requests.get(url)
     data = r.json()
     df = pd.DataFrame(data)
@@ -51,7 +53,7 @@ def index(stock="IBM"):
           formatters={'@index' : 'datetime'})
 
     # # Create the default plot figure
-    fig = figure(title = "stock price", x_axis_type='datetime', plot_width=600, plot_height=200)
+    fig = figure(title = "stock price", x_axis_type='datetime', plot_width=600, plot_height=200, size)
     fig.line(source=source, x='index', y='y')
     fig.add_tools(hover)
 
