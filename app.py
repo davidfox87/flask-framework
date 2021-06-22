@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, redirect, jsonify, url_for
 
 from bokeh.embed import components
 from bokeh.models.callbacks import CustomJS
-from bokeh.models import ColumnDataSource, Slider, Select, TextInput, Button, DateRangeSlider, HoverTool
+from bokeh.models import ColumnDataSource, Slider, Select, TextInput,  \
+    Button, DateRangeSlider, CrosshairTool, PreText, HoverTool, CheckboxButtonGroup, RadioButtonGroup
 from bokeh.layouts import column, row
 from bokeh.embed import json_item
 from bokeh.plotting import figure
@@ -59,7 +60,9 @@ def index(stock="IBM"):
     fig = figure(title = "stock price", x_axis_type='datetime', plot_width=600, plot_height=200, sizing_mode="stretch_width")
     fig.line(source=source, x='index', y='y')
     fig.add_tools(hover)
-
+    fig.add_tools(CrosshairTool())
+    stats = PreText(text='', width=500)
+    stats.text = str(df["4. close"].describe())
     # # define dropdown box widget
     
     date_range_slider = DateRangeSlider(title="date_range", start=source.data['index'][-1], 
@@ -102,9 +105,69 @@ def index(stock="IBM"):
 
     """)
 
+    
+
+    checkbox = RadioButtonGroup(labels=["1M", "3M", "6M", "1Y"], active=0)
+    callback_checkbox = CustomJS(args=dict(source=source), code="""
+        console.log("Button clicked"); 
+
+        const data = source.data;
+        const new_data = {index: [], y: []};
+
+        if (cb_obj.active==0) {
+          new_data["y"] = data["y"].slice(0, 30);
+          new_data["index"] = data["index"].slice(0, 30);
+        } 
+        if (cb_obj.active==1) {
+          new_data["y"] = data["y"].slice(0, 90);
+          new_data["index"] = data["index"].slice(0, 90);
+        } 
+
+        if (cb_obj.active==2) {
+          new_data["y"] = data["y"].slice(0, 183);
+          new_data["index"] = data["index"].slice(0, 183);
+        } 
+
+         if (cb_obj.active==3) {
+          new_data["y"] = data["y"].slice(0, 365);
+          new_data["index"] = data["index"].slice(0, 365);
+        } 
+
+        source.data = new_data
+
+        source.change.emit();
+        
+     """)
+
+    checkbox.js_on_click(callback_checkbox)
+
+    button = Button(label = "Click on the button",
+                button_type = "danger")
+  
+    callback_button = CustomJS(args=dict(source=source), code="""
+        console.log("Button clicked"); 
+
+        const data = source.data;
+
+        const new_data = {index: [], y: []};
+
+        new_data["y"] = data["y"].slice(0, 60);
+        new_data["index"] = data["index"].slice(0, 60);
+
+        source.data = new_data
+
+        source.change.emit();
+        
+     """)
+
+    button.js_on_click(callback_button)
+
     date_range_slider.js_on_change('value', callback)
+
     date_range_slider.sizing_mode = 'scale_width'
-    inputs_column = column([date_range_slider, fig], width=50, height=500)
+    stats.sizing_mode = 'scale_width'
+
+    inputs_column = column([date_range_slider, checkbox, fig, stats], width=50, height=500)
     inputs_column.sizing_mode = 'scale_width'
 
     script, div = components(inputs_column)
