@@ -1,0 +1,47 @@
+
+      html {
+        font-family: sans-serif;
+      }
+
+      body {
+        width: 70%;
+        max-width: 960px;
+        margin: 10px auto;
+      }
+
+      header {
+        background: rgb(5, 72, 172);
+        height: 100px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .wrapper {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+      }
+      
+      .main,
+      .sidebar {
+        border: 3px solid black;
+        padding: 15px;
+        background-color: #eee;
+        border-radius: 10px;
+      }
+      
+      .main {
+        width: 65%;
+        height: 350vh;
+        margin-top: 8px;
+      }
+      
+      .sidebar {
+        width: 30%;
+        height: 30vh;
+
+        position: sticky;
+        top: 15%;
+      }
