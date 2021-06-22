@@ -1,38 +1,136 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    {{resources}}
-    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.2.min.js"></script>
-    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.2.min.js"></script>
-    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.2.min.js"></script>
-    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.3.2.min.js"></script>
 
-  </head>
+<head>
+  {{resources}}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <body>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 text-left">
-          <h2>Hello, David!</h2>
-          <ul>
-            <li><a href="/about">About</a></li>
-            <li><a target="_blank" href="https://www.heroku.com/">Heroku</a></li>
-            <li><a target="_blank" href="http://flask.pocoo.org/">Flask</a></li>
-            <li><a target="_blank" href="http://jinja.pocoo.org/">Jinja2</a></li>
-            <li><a target="_blank" href="http://getbootstrap.com/">Bootstrap</a></li>
-          </ul>
-        </div>
-      </div>
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/mainpage.css') }}">
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.2.min.js"></script>
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.2.min.js"></script>
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.2.min.js"></script>
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.3.2.min.js"></script>
+
+
+  {{ plot_script|safe }}
+
+</head>
+
+<body>
+  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <div class="navbar-brand col-sm-3 col-md-2 mr-0">TDI 12-day Milestone Project</div>
+    <form action="{{ url_for('handle_data') }}" method="POST">
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search for a Stock" name="stock_name"
+        aria-label="Search">
+    </form>
+    <ul class="navbar-nav px-3">
+      <li class="nav-item text-nowrap">
+        <a class="nav-link" href="#">Sign out</a>
+      </li>
+    </ul>
+  </nav>
+
+
+
+  <div class="wrapper">
+    <div class="sidebar">
+      David Fox
+      Data Scientist
+
+      Boulder, CO
     </div>
-    <div id="myplot"></div>
+    <div class="main">
+      <h1> Stock Ticker Visualization with Flask and Bokeh </h1>
 
-    <script>
-      fetch('/plot')
-          .then(function(response) { return response.json(); })
-          .then(function(item) { Bokeh.embed.embed_item(item, "myplot"); })
-    </script>
+      <input type="submit" name="button1" value="1M">
+      <input type="submit" name="button2" value="3M">
+      <input type="submit" name="button2" value="6M">
+      <input type="submit" name="button2" value="YTD">
+      <input type="submit" name="button2" value="2Y">
+      <input type="submit" name="button2" value="5Y">
+      
+      <div> {{ plot_div|safe }}</div>
+
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Commodo nulla facilisi nullam vehicula ipsum a arcu. Mattis rhoncus urna neque viverra
+            justo nec ultrices dui sapien. Vitae sapien pellentesque habitant morbi tristique. Molestie nunc non blandit
+            massa enim nec. Etiam dignissim diam quis enim. Non quam lacus suspendisse faucibus interdum posuere.
+            Ultrices neque ornare aenean euismod elementum nisi quis eleifend quam. Ipsum suspendisse ultrices gravida
+            dictum. Commodo viverra maecenas accumsan lacus vel facilisis volutpat est velit. Porttitor rhoncus dolor
+            purus non enim praesent elementum. Libero enim sed faucibus turpis in. Est pellentesque elit ullamcorper
+            dignissim cras tincidunt lobortis feugiat vivamus. Viverra ipsum nunc aliquet bibendum. Dictum fusce ut
+            placerat orci nulla pellentesque dignissim enim sit. Faucibus nisl tincidunt eget nullam non nisi est sit
+            amet.
+        </p>
+        <p>
+            Massa vitae tortor condimentum lacinia quis vel. Urna duis convallis convallis tellus id interdum. Mauris
+            cursus mattis molestie a iaculis at erat pellentesque adipiscing. Congue quisque egestas diam in arcu cursus
+            euismod quis. Malesuada pellentesque elit eget gravida cum sociis natoque. Non quam lacus suspendisse
+            faucibus interdum posuere lorem ipsum dolor. Et malesuada fames ac turpis egestas maecenas. Arcu non odio
+            euismod lacinia at quis. Ut tortor pretium viverra suspendisse potenti. Tempor orci dapibus ultrices in
+            iaculis nunc sed. Netus et malesuada fames ac turpis egestas sed tempus urna. Eleifend quam adipiscing vitae
+            proin. Nunc faucibus a pellentesque sit amet. Egestas pretium aenean pharetra magna. Auctor urna nunc id
+            cursus metus aliquam eleifend mi in. Sed lectus vestibulum mattis ullamcorper. Urna condimentum mattis
+            pellentesque id nibh tortor id aliquet lectus. Fringilla phasellus faucibus scelerisque eleifend. Ultricies
+            lacus sed turpis tincidunt id aliquet risus.
+        </o>
+          
+    </div>
+
+  </div>
 
 
-  </body>
+  <!--     
+    <section>
+      <article>
+        <h2>Left Flex item</h2>
+
+        <p>Tacos actually microdosing, pour-over semiotics banjo chicharrones retro fanny pack portland everyday carry vinyl typewriter. Tacos PBR&B pork belly, everyday carry ennui pickled sriracha normcore hashtag polaroid single-origin coffee cold-pressed. PBR&B tattooed trust fund twee, leggings salvia iPhone photo booth health goth gastropub hammock.</p>
+
+        
+      </article>
+
+      <article>
+        <h2>Flask/Bokeh stock ticker demo</h2>
+
+
+
+        <input type="submit" name="button1" value="1M">
+        <input type="submit" name="button2" value="3M">
+        <input type="submit" name="button2" value="6M">
+        <input type="submit" name="button2" value="YTD">
+        <input type="submit" name="button2" value="2Y">
+        <input type="submit" name="button2" value="5Y">
+      </article>
+
+    </section> -->
+
+
+
+  <container>
+    <button><a target="_blank" href="https://www.heroku.com/">Heroku</a></button>
+    <button><a target="_blank" href="http://flask.pocoo.org/">Flask</a></button>
+    <button><a target="_blank" href="http://jinja.pocoo.org/">Jinja2</a></button>
+    <button><a target="_blank" href="http://getbootstrap.com/">Bootstrap</a></button>
+  </container>
+
+</body>
+
 </html>
-
