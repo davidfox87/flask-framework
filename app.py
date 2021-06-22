@@ -53,7 +53,7 @@ def index(stock="IBM"):
           formatters={'@index' : 'datetime'})
 
     # # Create the default plot figure
-    fig = figure(title = "stock price", x_axis_type='datetime', plot_width=600, plot_height=200, size)
+    fig = figure(title = "stock price", x_axis_type='datetime', plot_width=600, plot_height=200)
     fig.line(source=source, x='index', y='y')
     fig.add_tools(hover)
 
