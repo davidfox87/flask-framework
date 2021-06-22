@@ -54,7 +54,7 @@ def index(stock="IBM"):
           formatters={'@index' : 'datetime'})
 
     # # Create the default plot figure
-    fig = figure(title = "stock price", x_axis_type='datetime', plot_width=600, plot_height=200)
+    fig = figure(title = "stock price", x_axis_type='datetime', plot_width=600, plot_height=200, sizing_mode="stretch_width")
     fig.line(source=source, x='index', y='y')
     fig.add_tools(hover)
 
@@ -101,8 +101,9 @@ def index(stock="IBM"):
     """)
 
     date_range_slider.js_on_change('value', callback)
-
+    date_range_slider.sizing_mode = 'scale_width'
     inputs_column = column([date_range_slider, fig], width=50, height=500)
+    inputs_column.sizing_mode = 'scale_width'
     # layout_row = row([ inputs_column, fig ])
 
     script, div = components(inputs_column)
