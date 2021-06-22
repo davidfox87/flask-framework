@@ -14,14 +14,17 @@ import json
 import requests
 import os
 
-from boto.s3.connection import S3Connection
+#from boto.s3.connection import S3Connection
+
 
 app = Flask(__name__)
 
 
 def get_data(name="IBM"):
-    alphav_key = S3Connection(os.environ['API_KEY'])
-    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&outputsize=full&apikey={}'.format(name, alphav_key)
+    # print(os.environ)
+    # alphav_key = os.environ.get('API_KEY')
+    # print("The alpha vantage api key is {}".format(alphav_key))
+    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&outputsize=full&apikey=0BQ5L9P8FFKF6MU1'.format(name, alphav_key)
     r = requests.get(url)
     data = r.json()
     df = pd.DataFrame(data)
