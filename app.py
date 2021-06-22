@@ -13,12 +13,14 @@ import json
 
 import requests
 import os
+import jinja2
+
 
 #from boto.s3.connection import S3Connection
 
 
 app = Flask(__name__)
-
+app.config["DEBUG"] = True
 
 def get_data(name="IBM"):
     # print(os.environ)
@@ -104,12 +106,11 @@ def index(stock="IBM"):
     date_range_slider.sizing_mode = 'scale_width'
     inputs_column = column([date_range_slider, fig], width=50, height=500)
     inputs_column.sizing_mode = 'scale_width'
-    # layout_row = row([ inputs_column, fig ])
 
     script, div = components(inputs_column)
 
     return render_template('index.html', plot_script=script,
-        plot_div=div)
+        plot_div=div, text=stock)
 
 @app.route('/about')
 def about():
@@ -121,7 +122,6 @@ def handle_data():
     name = request.form['stock_name']
 
     return redirect(url_for('index',stock=name))
-    print(name)
 
 
 
