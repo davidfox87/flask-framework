@@ -24,7 +24,7 @@ def get_data(name="IBM"):
     # print(os.environ)
     # alphav_key = os.environ.get('API_KEY')
     # print("The alpha vantage api key is {}".format(alphav_key))
-    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&outputsize=full&apikey=0BQ5L9P8FFKF6MU1'.format(name, alphav_key)
+    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&outputsize=full&apikey=0BQ5L9P8FFKF6MU1'.format(name)
     r = requests.get(url)
     data = r.json()
     df = pd.DataFrame(data)
